@@ -1,0 +1,121 @@
+.section{
+    border-style: solid;
+    border-width: thin;
+    border-color: #C0C3C3;
+}
+.name{
+    margin-left: 1em;
+    font-size: 2em;
+}
+
+.label{
+    margin-left: 2em;
+}
+.number{
+    font-size: 3em;
+    margin-left: 2em;
+    margin-bottom: 0em;
+    margin-top: 0.5em;
+}
+.value{
+    width: 22em;
+    height: 5em;
+}
+.add-button{
+    background-color: #FFFFFF;
+    width: 10%;
+    height: 2em;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #C0C3C3;
+    position: relative;
+    top: 2.5em;
+    left: 80.5em;
+}
+
+.add-button:active{
+    background-color: #714399;
+}
+
+.add{
+    position: relative;
+    left: 73em;
+    bottom: 7em;
+}
+
+.search{
+    position: relative;
+    width: 20em;
+    height: 3em;
+    border-width: thin;
+    margin-left: 4em;
+    margin-bottom: 30em;
+    bottom: 25em;
+}
+.result{
+    width: 60em;
+    height: 10em;
+    margin: 5em 0em 5em 20em;
+    top: 3.6em;
+}
+
+.to-doctor{
+    position: relative;
+    left: 80em;
+    bottom: 5em;
+    color: #714399;
+    text-decoration: none;
+}
+
+#medicalCard{
+  padding: 0px 35px;
+  height: 60vh;
+
+  border: 5px solid;
+}
+
+table {
+  display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+}
+
+thead{
+  flex: 0 0 auto;
+  width: calc(100% - 0.9em);
+  /* color: white; */
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 20px;
+}
+
+tbody{
+  flex: 1 1 auto;
+  display: block;       
+  overflow-y: auto;    
+  overflow-x: hidden; 
+}
+
+table tbody tr {
+  border-radius: 0px;
+  width: 100%;
+  /* border-top: 1px solid; */
+}
+
+table tbody td {
+  border-radius: 0px;
+
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+table thead, table tbody tr {
+  display: table;
+  table-layout: fixed;
+}
+
+td, th {
+ text-align: center;
+}
+
