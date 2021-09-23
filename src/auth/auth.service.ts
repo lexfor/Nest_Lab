@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthRepository } from './interfaces/repository.interface';
 import * as bcrypt from 'bcrypt';
-import { User } from './entities/user.enity';
+import { User } from './entities/user.entity';
 import { v1 as uuidv1 } from 'uuid';
 
 @Injectable()

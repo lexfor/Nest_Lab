@@ -3,9 +3,10 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { DatabaseModule } from '../database/database.module';
 import { SQLRepository } from './auth.repository';
+import { PatientModule } from '../patient/patient.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, PatientModule],
   controllers: [AuthController],
   providers: [
     {
