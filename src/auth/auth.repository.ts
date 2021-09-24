@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import { User } from './entities/user.entity';
+import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class SQLRepository {
   constructor(
-    @Inject(DatabaseService) private databaseService: DatabaseService,
+    @Inject(DatabaseService) private readonly databaseService: DatabaseService,
   ) {}
 
   async createUser(user: User): Promise<User> {

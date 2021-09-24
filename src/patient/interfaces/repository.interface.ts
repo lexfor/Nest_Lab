@@ -1,4 +1,4 @@
-import { Patient } from '../entities/patient.entity';
+import { Patient } from './patient.interface';
 
 export interface PatientRepository {
   createPatient: (patient: Patient) => Promise<Patient>;

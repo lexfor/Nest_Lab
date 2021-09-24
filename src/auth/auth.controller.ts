@@ -7,12 +7,15 @@ import {
   HttpStatus,
   Query,
   Inject,
+  DefaultValuePipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { User } from './entities/user.entity';
+import { User } from './interfaces/user.interface';
 import { PatientService } from '../patient/patient.service';
+import { CreatePatientDto } from '../patient/dto/create-patient.dto';
 
 @Controller('api/auth')
 @Dependencies(AuthService)
@@ -23,9 +26,11 @@ export class AuthController {
   ) {}
 
   @Post('registration')
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(
+    @Body(ValidationPipe) createUserDto: CreateUserDto,
+  ): Promise<User> {
     const user = await this.authService.create(createUserDto);
-    const createPatientDto = {
+    const createPatientDto: CreatePatientDto = {
       mail: createUserDto.login,
       name: createUserDto.name,
       gender: createUserDto.gender,
@@ -39,8 +44,8 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
-    @Body() loginUserDto: LoginUserDto,
-    @Query('role') role: string,
+    @Body(ValidationPipe) loginUserDto: LoginUserDto,
+    @Query('role', new DefaultValuePipe('patient')) role: string,
   ): Promise<User> {
     return await this.authService.login(loginUserDto, role);
   }

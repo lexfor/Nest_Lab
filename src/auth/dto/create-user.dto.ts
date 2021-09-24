@@ -1,21 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MinLength } from 'class-validator';
+import { IsDate, IsString } from 'class-validator';
+import { LoginUserDto } from './login-user.dto';
 
-export class CreateUserDto {
-  @MinLength(5)
-  @ApiProperty()
-  login: string;
-
-  @MinLength(10)
-  @ApiProperty()
-  password: string;
-
+export class CreateUserDto extends LoginUserDto {
+  @IsString()
   @ApiProperty()
   name: string;
 
   @ApiProperty()
+  @IsDate()
   birthday: string;
 
+  @IsString()
   @ApiProperty()
   gender: string;
 
