@@ -1,12 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class SQLRepository {
-  constructor(
-    @Inject(DatabaseService) private readonly databaseService: DatabaseService,
-  ) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async createUser(user: User): Promise<User> {
     const sql = `INSERT INTO users SET ?`;

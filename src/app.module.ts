@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
-import { PatientModule } from './patient/patient.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { PatientModule } from './patient/patient.module';
       isGlobal: true,
     }),
     DatabaseModule,
-    PatientModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

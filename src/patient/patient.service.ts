@@ -16,6 +16,10 @@ export class PatientService {
       id: uuidv1(),
       ...createPatientDto,
     };
-    return this.repository.createPatient(patient);
+    return await this.repository.createPatient(patient);
+  }
+
+  async getPatientByUserID(userID: string): Promise<Patient> {
+    return await this.repository.findPatientByUserID(userID);
   }
 }

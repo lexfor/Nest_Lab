@@ -8,7 +8,7 @@ export class CreateUserDto extends LoginUserDto {
   name: string;
 
   @ApiProperty()
-  @IsDate()
+  @IsString()
   birthday: string;
 
   @IsString()

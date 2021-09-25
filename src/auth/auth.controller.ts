@@ -16,6 +16,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './interfaces/user.interface';
 import { PatientService } from '../patient/patient.service';
 import { CreatePatientDto } from '../patient/dto/create-patient.dto';
+import { Token } from './interfaces/token.interface';
 
 @Controller('api/auth')
 @Dependencies(AuthService)
@@ -28,7 +29,7 @@ export class AuthController {
   @Post('registration')
   async create(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<User> {
+  ): Promise<void> {
     const user = await this.authService.create(createUserDto);
     const createPatientDto: CreatePatientDto = {
       mail: createUserDto.login,
@@ -38,7 +39,6 @@ export class AuthController {
       user_id: user.id,
     };
     await this.patientService.create(createPatientDto);
-    return user;
   }
 
   @Post('login')
@@ -46,7 +46,8 @@ export class AuthController {
   async login(
     @Body(ValidationPipe) loginUserDto: LoginUserDto,
     @Query('role', new DefaultValuePipe('patient')) role: string,
-  ): Promise<User> {
-    return await this.authService.login(loginUserDto, role);
+  ): Promise<Token> {
+    const user: User = await this.authService.findUser(loginUserDto, role);
+    return await this.authService.login(user);
   }
 }

@@ -1,16 +1,22 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { Patient } from './interfaces/patient.interface';
 
 @Injectable()
 export class SQLRepository {
-  constructor(
-    @Inject(DatabaseService) private readonly databaseService: DatabaseService,
-  ) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async createPatient(patient: Patient): Promise<Patient> {
     const sql = `INSERT INTO patients SET ?`;
     await this.databaseService.executeQuery(sql, [patient]);
+    return patient;
+  }
+
+  async findPatientByUserID(userID: string): Promise<Patient> {
+    const sql = `SELECT * FROM patients
+    WHERE 
+    user_id = ?`;
+    const [patient] = await this.databaseService.executeQuery(sql, [userID]);
     return patient;
   }
 }

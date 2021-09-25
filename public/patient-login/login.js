@@ -16,10 +16,8 @@ async function logIn() {
   });
 
   const res = await response.json();
-
-  console.log(res);
   if (response.ok) {
-    window.sessionStorage.setItem('jwt', res.jwt);
+    window.sessionStorage.setItem('jwt', res.token);
     document.location.href = '/queue';
   }
 }
