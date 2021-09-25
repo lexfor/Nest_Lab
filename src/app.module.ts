@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './helpers/database/database.module';
 import { QueueModule } from './queue/queue.module';
+import { ResolutionModule } from './resolution/resolution.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { QueueModule } from './queue/queue.module';
     }),
     DatabaseModule,
     QueueModule,
+    ResolutionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

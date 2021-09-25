@@ -7,8 +7,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { QueueService } from './queue.service';
-import { JwtGuard } from '../guards/jwt.guard';
-import { userID } from '../decorators/user-id.decarator';
+import { JwtGuard } from '../helpers/guards/jwt.guard';
+import { userID } from '../doctor/decorators/user-id.decarator';
 import { PatientService } from '../patient/patient.service';
 import { Patient } from '../patient/interfaces/patient.interface';
 import { DoctorService } from '../doctor/doctor.service';

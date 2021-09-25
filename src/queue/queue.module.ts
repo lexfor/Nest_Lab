@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { QueueService } from './queue.service';
 import { QueueController } from './queue.controller';
 import { ConfigService } from '@nestjs/config';
-import { getRedisClient } from '../configs/redis.config';
+import { getRedisClient } from '../helpers/configs/redis.config';
 import { RedisRepository } from './queue.repository';
 import { PatientModule } from '../patient/patient.module';
 import { DoctorModule } from '../doctor/doctor.module';
@@ -22,5 +22,6 @@ import { DoctorModule } from '../doctor/doctor.module';
     },
     QueueService,
   ],
+  exports: [QueueService],
 })
 export class QueueModule {}
