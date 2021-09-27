@@ -22,4 +22,12 @@ export class PatientService {
   async getPatientByUserID(userID: string): Promise<Patient> {
     return await this.repository.findPatientByUserID(userID);
   }
+
+  async getAllPatients(patientInfo: string): Promise<Patient[]> {
+    return await this.repository.getAllPatients(patientInfo);
+  }
+
+  async getPatientByID(patientID: string): Promise<Patient> {
+    return await this.repository.getPatientByID(patientID);
+  }
 }

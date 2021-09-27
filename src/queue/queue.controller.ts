@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { QueueService } from './queue.service';
 import { JwtGuard } from '../helpers/guards/jwt.guard';
-import { userID } from '../doctor/decorators/user-id.decarator';
+import { userID } from '../helpers/decorators/user-id.decarator';
 import { PatientService } from '../patient/patient.service';
 import { Patient } from '../patient/interfaces/patient.interface';
 import { DoctorService } from '../doctor/doctor.service';
@@ -36,15 +36,19 @@ export class QueueController {
 
   @UseGuards(JwtGuard)
   @Get('me/current')
-  async getCurrentInMyQueue(@userID() userID: string): Promise<string> {
+  async getCurrentInMyQueue(@userID() userID: string): Promise<Patient> {
     const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
-    return await this.queueService.getCurrentInQueue(doctor.id);
+    const patientID: string = await this.queueService.getCurrentInQueue(
+      doctor.id,
+    );
+    return await this.patientService.getPatientByID(patientID);
   }
 
   @UseGuards(JwtGuard)
   @Get(':id/current')
-  async getCurrentInQueue(@Param('id') id: string): Promise<string> {
-    return await this.queueService.getCurrentInQueue(id);
+  async getCurrentInQueue(@Param('id') id: string): Promise<Patient> {
+    const patientID: string = await this.queueService.getCurrentInQueue(id);
+    return await this.patientService.getPatientByID(patientID);
   }
 
   @UseGuards(JwtGuard)

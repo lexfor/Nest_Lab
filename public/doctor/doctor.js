@@ -14,13 +14,16 @@ function addTD(key, tr) {
 
 async function onInput() {
   const searchInputValue = searchInput.value;
-  const response = await fetch(`/patients?patientInfo=${searchInputValue}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+  const response = await fetch(
+    `/api/patient/all?patientInfo=${searchInputValue}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+      },
     },
-  });
+  );
 
   if (response.ok) {
     const json = await response.json();
@@ -41,7 +44,7 @@ async function onInput() {
 }
 
 async function deleteButton(event) {
-  const response = await fetch(`/resolution/${event.target.id}`, {
+  const response = await fetch(`/api/resolution/${event.target.id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -62,13 +65,16 @@ async function deleteButton(event) {
 }
 
 async function refreshTableContent(patient_id) {
-  const getResolutions = await fetch(`/patient/${patient_id}/resolutions`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+  const getResolutions = await fetch(
+    `/api/resolution/all/patient/${patient_id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+      },
     },
-  });
+  );
 
   if (getResolutions.ok) {
     const tableContent = await getResolutions.json();
@@ -117,7 +123,7 @@ async function onChange() {
 }
 
 async function getCurrent() {
-  const response = await fetch('/queue/me/current', {
+  const response = await fetch('/api/queue/me/current', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -135,7 +141,7 @@ async function getCurrent() {
 }
 
 async function next() {
-  const response = await fetch('/queue/me/next', {
+  const response = await fetch('/api/queue/me/next', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -153,14 +159,19 @@ async function setCurrentResolution() {
   const body = {
     value: resolution.value,
   };
-  const response = await fetch(`/patient/${window.sessionStorage.getItem('currentPatientID')}/resolution`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+  const response = await fetch(
+    `/api/resolution/patient/${window.sessionStorage.getItem(
+      'currentPatientID',
+    )}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+      },
+      body: JSON.stringify(body),
     },
-    body: JSON.stringify(body),
-  });
+  );
   await response.json();
 }
 

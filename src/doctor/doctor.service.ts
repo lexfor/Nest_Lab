@@ -11,7 +11,7 @@ export class DoctorService {
   ) {}
 
   async findDoctorByUserID(userID: string): Promise<Doctor> {
-    return await this.doctorRepository.findPDoctorByUserID(userID);
+    return await this.doctorRepository.findDoctorByUserID(userID);
   }
 
   async getAllSpecializations(): Promise<Specialization[]> {
@@ -21,7 +21,7 @@ export class DoctorService {
   async getDoctorsBySpecialization(
     specializationID: string,
   ): Promise<Doctor[]> {
-    return await this.doctorRepository.getDoctorsBySpecializations(
+    return await this.doctorRepository.getDoctorsBySpecialization(
       specializationID,
     );
   }

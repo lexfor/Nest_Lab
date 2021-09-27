@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './helpers/database/database.module';
 import { QueueModule } from './queue/queue.module';
 import { ResolutionModule } from './resolution/resolution.module';
+import { DoctorModule } from './doctor/doctor.module';
+import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ResolutionModule } from './resolution/resolution.module';
     DatabaseModule,
     QueueModule,
     ResolutionModule,
+    DoctorModule,
+    PatientModule,
   ],
   controllers: [AppController],
   providers: [AppService],

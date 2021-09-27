@@ -8,7 +8,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { getJwtConfig } from '../helpers/configs/jwt.config';
 import { PassportModule } from '@nestjs/passport';
-import { DatabaseService } from '../helpers/database/database.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -29,9 +28,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       provide: 'AUTH_REPOSITORY',
       useClass: SQLRepository,
     },
-    ConfigService,
     AuthService,
-    DatabaseService,
     JwtStrategy,
   ],
   exports: [AuthService],

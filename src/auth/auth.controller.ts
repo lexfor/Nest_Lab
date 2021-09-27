@@ -30,7 +30,7 @@ export class AuthController {
   async create(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
   ): Promise<void> {
-    const user = await this.authService.create(createUserDto);
+    const user = await this.authService.createUser(createUserDto);
     const createPatientDto: CreatePatientDto = {
       mail: createUserDto.login,
       name: createUserDto.name,

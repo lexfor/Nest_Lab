@@ -15,7 +15,7 @@ function addTD(key, tr) {
 }
 
 async function refreshTableContent() {
-  const getResolutions = await fetch('/patient/me/resolutions', {
+  const getResolutions = await fetch('/api/resolution/all/patient/me', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -50,7 +50,7 @@ async function getCurrent() {
   const doctorNameValue = doctorNamesInput.value;
   const { doctorID } = document.getElementById(doctorNameValue);
   if (doctorID) {
-    const response = await fetch(`/queue/${doctorID}/current`, {
+    const response = await fetch(`/api/queue/${doctorID}/current`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -70,7 +70,7 @@ async function getCurrent() {
 async function Add() {
   const doctorNameValue = doctorNamesInput.value;
   const ID = document.getElementById(doctorNameValue).doctorID;
-  const response = await fetch(`/queue/${ID}/patient/me`, {
+  const response = await fetch(`/api/queue/${ID}/patient/me`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -86,7 +86,13 @@ async function Add() {
 async function getAllDoctorsBySpecializations() {
   const ID = doctorTypesInput.value;
   const doctorsTypeID = document.getElementById(ID).specializationID;
-  const response = await fetch(`/doctor/specialization/${doctorsTypeID}`);
+  const response = await fetch(`/api/doctor/specialization/${doctorsTypeID}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+    },
+  });
 
   if (response.ok) {
     const json = await response.json();
@@ -106,7 +112,13 @@ async function getAllDoctorsBySpecializations() {
 }
 
 window.onload = async () => {
-  const response = await fetch('/doctor/specializations');
+  const response = await fetch('/api/doctor/all/specializations', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
+    },
+  });
 
   if (response.ok) {
     const json = await response.json();

@@ -17,13 +17,13 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const cryptUser: User = {
       id: uuidv1(),
       login: createUserDto.login,
       password: await bcrypt.hashSync(
         createUserDto.password,
-        this.config.get('SALT'),
+        +this.config.get('SALT'),
       ),
     };
     return this.repository.createUser(cryptUser);

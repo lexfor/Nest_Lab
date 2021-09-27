@@ -10,7 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ResolutionService } from './resolution.service';
-import { userID } from '../doctor/decorators/user-id.decarator';
+import { userID } from '../helpers/decorators/user-id.decarator';
 import { Resolution } from './interfaces/resolution.interface';
 import { JwtGuard } from '../helpers/guards/jwt.guard';
 import { ResolutionValueDto } from './dto/resolution-value.dto';
@@ -29,14 +29,14 @@ export class ResolutionController {
   ) {}
 
   @UseGuards(JwtGuard)
-  @Post('patient/:id')
+  @Post('/patient/:id')
   async addResolution(
     @Body(ValidationPipe) resolutionValueDto: ResolutionValueDto,
     @userID() userID: string,
     @Param('id') id: string,
   ): Promise<Resolution> {
     const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
-    const patient: Patient = await this.patientService.getPatientByUserID(id);
+    const patient: Patient = await this.patientService.getPatientByID(id);
     const createResolutionDto: CreateResolutionDto = {
       value: resolutionValueDto.value,
       patient_id: patient.id,
@@ -47,7 +47,7 @@ export class ResolutionController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('patient/me')
+  @Get('/all/patient/me')
   async getAllMyResolutions(@userID() userID: string): Promise<Resolution[]> {
     const patient: Patient = await this.patientService.getPatientByUserID(
       userID,
@@ -56,9 +56,9 @@ export class ResolutionController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('patient/:id')
+  @Get('/all/patient/:id')
   async getAllResolutions(@Param('id') id: string): Promise<Resolution[]> {
-    const patient: Patient = await this.patientService.getPatientByUserID(id);
+    const patient: Patient = await this.patientService.getPatientByID(id);
     return await this.resolutionService.getAllResolutions(patient.id);
   }
 

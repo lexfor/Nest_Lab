@@ -14,8 +14,7 @@ async function logIn() {
   });
   const res = await response.json();
   if (response.ok) {
-    window.sessionStorage.setItem('jwt', res.jwt);
-    window.sessionStorage.setItem('patient', res.user_id);
+    window.sessionStorage.setItem('jwt', res.token);
     document.location.href = '/doctor';
   }
 }

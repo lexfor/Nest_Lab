@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { QueueRepository } from './interfaces/repository.interface';
 
 @Injectable()
@@ -13,7 +13,11 @@ export class QueueService {
   }
 
   async getCurrentInQueue(queueID: string): Promise<string> {
-    return await this.repository.getCurrentInQueue(queueID);
+    const result: string = await this.repository.getCurrentInQueue(queueID);
+    if (!result) {
+      throw new HttpException('No patients in queue', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   async takeNextFromQueue(queueID: string): Promise<string> {

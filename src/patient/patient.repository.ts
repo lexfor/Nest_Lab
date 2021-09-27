@@ -19,4 +19,18 @@ export class SQLRepository {
     const [patient] = await this.databaseService.executeQuery(sql, [userID]);
     return patient;
   }
+
+  async getAllPatients(patientInfo: string): Promise<Patient[]> {
+    const sql = `SELECT * FROM patients
+    WHERE name LIKE '%${patientInfo}%'
+    OR mail LIKE '%${patientInfo}%'`;
+    return await this.databaseService.executeQuery(sql);
+  }
+
+  async getPatientByID(patientID: string): Promise<Patient> {
+    const sql = `SELECT * FROM patients
+    WHERE id = ?`;
+    const [result] = await this.databaseService.executeQuery(sql, [patientID]);
+    return result;
+  }
 }
