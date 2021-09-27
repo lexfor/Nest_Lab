@@ -31,4 +31,11 @@ export class RedisRepository {
     await lpopAsync(`queueTo${queueID}`);
     return queueID;
   }
+
+  async getAllPatientsFromQueue(queueID: string): Promise<string[]> {
+    const lrangeAsync = promisify(this.redisClient.lrange).bind(
+      this.redisClient,
+    );
+    return await lrangeAsync(`queueTo${queueID}`, 0, -1);
+  }
 }

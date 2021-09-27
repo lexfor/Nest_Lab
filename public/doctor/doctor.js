@@ -150,7 +150,11 @@ async function next() {
   });
 
   if (response.ok) {
-    await getCurrent();
+    const result = await response.json();
+    document.getElementById('currentNumber').innerHTML = result.name;
+    window.sessionStorage.setItem('currentPatientID', result.id);
+  } else {
+    document.getElementById('currentNumber').innerHTML = 'N/A';
   }
 }
 

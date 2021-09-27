@@ -31,6 +31,7 @@ export class QueueController {
     const patient: Patient = await this.patientService.getPatientByUserID(
       userID,
     );
+    await this.queueService.checkIsPatientInQueue(id, patient.id);
     return await this.queueService.addPatientInQueue(id, patient.id);
   }
 
@@ -53,8 +54,11 @@ export class QueueController {
 
   @UseGuards(JwtGuard)
   @Get('me/next')
-  async takeNextInMyQueue(@userID() userID: string): Promise<string> {
+  async takeNextInMyQueue(@userID() userID: string): Promise<Patient> {
     const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
-    return await this.queueService.takeNextFromQueue(doctor.id);
+    const patientID: string = await this.queueService.takeNextFromQueue(
+      doctor.id,
+    );
+    return await this.patientService.getPatientByID(patientID);
   }
 }

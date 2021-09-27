@@ -45,4 +45,11 @@ export class AuthService {
       token: await this.jwtService.signAsync({ id }),
     };
   }
+
+  async isExist(login: string, role = 'patient'): Promise<void> {
+    const user = await this.repository.getUser(login, role);
+    if (user) {
+      throw new HttpException('User already exist', HttpStatus.CONFLICT);
+    }
+  }
 }
