@@ -3,7 +3,7 @@ import { DoctorService } from './doctor.service';
 import { Doctor } from './interfaces/doctor.interface';
 import { Specialization } from './interfaces/specialization.interface';
 
-describe('AuthService', () => {
+describe('DoctorService', () => {
   let doctorService: DoctorService;
 
   const MockDoctorRepository = {

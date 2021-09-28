@@ -1,14 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PatientService } from '../patient/patient.service';
-import { CreatePatientDto } from '../patient/dto/create-patient.dto';
-import { Patient } from '../patient/interfaces/patient.interface';
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { DoctorController } from './doctor.controller';
 import { DoctorService } from './doctor.service';
 import { Specialization } from './interfaces/specialization.interface';
 import { Doctor } from './interfaces/doctor.interface';
 
-describe('AuthController', () => {
+describe('DoctorController', () => {
   let doctorController: DoctorController;
 
   const MockDoctorService = {
