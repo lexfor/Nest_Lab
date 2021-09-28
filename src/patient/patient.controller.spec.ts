@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PatientController } from './patient.controller';
 import { PatientService } from './patient.service';
 import { Patient } from './interfaces/patient.interface';
-import e from 'express';
 
 describe('PatientController', () => {
   let patientController: PatientController;

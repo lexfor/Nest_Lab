@@ -1,5 +1,6 @@
 import {
-  Controller, Dependencies,
+  Controller,
+  Dependencies,
   Get,
   Inject,
   Param,
@@ -25,7 +26,7 @@ export class QueueController {
 
   @UseGuards(JwtGuard)
   @Post(':id/patient/me')
-  async AddMeInQueue(
+  async addMeInQueue(
     @Param('id') id: string,
     @userID() userID: string,
   ): Promise<number> {
