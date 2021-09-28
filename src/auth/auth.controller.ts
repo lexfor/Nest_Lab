@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Query,
-  Inject,
   DefaultValuePipe,
   ValidationPipe,
 } from '@nestjs/common';
@@ -19,15 +18,15 @@ import { CreatePatientDto } from '../patient/dto/create-patient.dto';
 import { Token } from './interfaces/token.interface';
 
 @Controller('api/auth')
-@Dependencies(AuthService)
+@Dependencies(AuthService, PatientService)
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    @Inject(PatientService) private readonly patientService: PatientService,
+    private readonly patientService: PatientService,
   ) {}
 
   @Post('registration')
-  async create(
+  async createUser(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
   ): Promise<void> {
     await this.authService.isExist(createUserDto.login);

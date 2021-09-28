@@ -1,5 +1,5 @@
 import {
-  Controller,
+  Controller, Dependencies,
   Get,
   Inject,
   Param,
@@ -15,11 +15,12 @@ import { DoctorService } from '../doctor/doctor.service';
 import { Doctor } from '../doctor/interfaces/doctor.interface';
 
 @Controller('api/queue')
+@Dependencies(QueueService, PatientService, DoctorService)
 export class QueueController {
   constructor(
     private readonly queueService: QueueService,
-    @Inject(PatientService) private readonly patientService: PatientService,
-    @Inject(DoctorService) private readonly doctorService: DoctorService,
+    private readonly patientService: PatientService,
+    private readonly doctorService: DoctorService,
   ) {}
 
   @UseGuards(JwtGuard)

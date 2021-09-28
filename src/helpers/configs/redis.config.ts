@@ -3,7 +3,7 @@ import { createClient, RedisClient } from 'redis';
 
 export const getRedisClient = (configService: ConfigService): RedisClient => {
   return createClient({
-    host: configService.get('DATABASE_HOST'),
-    port: configService.get('DATABASE_LOCAL_PORT'),
+    host: configService.get('REDIS_HOST'),
+    port: configService.get('REDIS_PORT'),
   });
 };

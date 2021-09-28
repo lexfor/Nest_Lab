@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Dependencies, Inject, Injectable } from '@nestjs/common';
 import { ResolutionRepository } from './interfaces/repository.interface';
 import { CreateResolutionDto } from './dto/create-resolution.dto';
 import { Resolution } from './interfaces/resolution.interface';

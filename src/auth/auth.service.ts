@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthRepository } from './interfaces/repository.interface';
-import * as bcrypt from 'bcrypt';
+import { hashSync, compareSync } from 'bcryptjs';
 import { User } from './interfaces/user.interface';
 import { v1 as uuidv1 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
@@ -21,7 +21,7 @@ export class AuthService {
     const cryptUser: User = {
       id: uuidv1(),
       login: createUserDto.login,
-      password: await bcrypt.hashSync(
+      password: await hashSync(
         createUserDto.password,
         +this.config.get('SALT'),
       ),
@@ -34,7 +34,7 @@ export class AuthService {
     if (!user) {
       throw new HttpException('Wrong login', HttpStatus.UNAUTHORIZED);
     }
-    if (await bcrypt.compareSync(loginUserDto.password, user.password)) {
+    if (await compareSync(loginUserDto.password, user.password)) {
       return user;
     }
     throw new HttpException('Wrong password', HttpStatus.UNAUTHORIZED);

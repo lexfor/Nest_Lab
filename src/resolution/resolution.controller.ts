@@ -2,12 +2,11 @@ import {
   Body,
   Controller,
   Get,
-  Inject,
   Param,
   Post,
   UseGuards,
   ValidationPipe,
-  Delete,
+  Delete, Dependencies,
 } from '@nestjs/common';
 import { ResolutionService } from './resolution.service';
 import { userID } from '../helpers/decorators/user-id.decarator';
@@ -21,11 +20,12 @@ import { Patient } from '../patient/interfaces/patient.interface';
 import { CreateResolutionDto } from './dto/create-resolution.dto';
 
 @Controller('api/resolution')
+@Dependencies(ResolutionService, PatientService, DoctorService)
 export class ResolutionController {
   constructor(
     private readonly resolutionService: ResolutionService,
-    @Inject(PatientService) private readonly patientService: PatientService,
-    @Inject(DoctorService) private readonly doctorService: DoctorService,
+    private readonly patientService: PatientService,
+    private readonly doctorService: DoctorService,
   ) {}
 
   @UseGuards(JwtGuard)

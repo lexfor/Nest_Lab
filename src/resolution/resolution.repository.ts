@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Dependencies, Injectable } from '@nestjs/common';
 import { DatabaseService } from '../helpers/database/database.service';
 import { Resolution } from './interfaces/resolution.interface';
 
 @Injectable()
+@Dependencies(DatabaseService)
 export class SQLRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
