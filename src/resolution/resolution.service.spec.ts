@@ -53,6 +53,7 @@ describe('QueueService', () => {
 
   describe('get all resolutions', () => {
     it('success resolutions get', async () => {
+      const time = `${new Date().getTime()}`;
       MockResolutionRepository.getAllResolutions.mockImplementation(
         async (patientID: string): Promise<Resolution[]> => {
           expect(patientID).toEqual('1111');
@@ -70,7 +71,7 @@ describe('QueueService', () => {
               id: '3333',
               value: 'bad',
               delay: 30000,
-              createdTime: '29999999',
+              createdTime: `${time}`,
               patient_id: patientID,
               doctor_name: 'Dima',
               doctor_specialization: 'therapist',
@@ -81,19 +82,10 @@ describe('QueueService', () => {
 
       expect(await resolutionService.getAllResolutions('1111')).toEqual([
         {
-          id: '2222',
-          value: 'good',
-          delay: 30000,
-          createdTime: '19999999',
-          patient_id: '1111',
-          doctor_name: 'Tim',
-          doctor_specialization: 'surgeon',
-        },
-        {
           id: '3333',
           value: 'bad',
           delay: 30000,
-          createdTime: '29999999',
+          createdTime: `${time}`,
           patient_id: '1111',
           doctor_name: 'Dima',
           doctor_specialization: 'therapist',

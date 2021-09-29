@@ -26,7 +26,12 @@ export class ResolutionService {
   }
 
   async getAllResolutions(patientID: string): Promise<Resolution[]> {
-    return await this.repository.getAllResolutions(patientID);
+    const resolutions = await this.repository.getAllResolutions(patientID);
+    return resolutions.filter((resolution) => {
+      if (new Date().getTime() - +resolution.createdTime < resolution.delay) {
+        return resolution;
+      }
+    });
   }
 
   async deleteResolution(resolutionID: string): Promise<string> {
