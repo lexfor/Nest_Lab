@@ -36,7 +36,7 @@ export class ResolutionController {
     @userID() userID: string,
     @Param('id') id: string,
   ): Promise<Resolution> {
-    const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
+    const doctor: Doctor = await this.doctorService.getDoctorByUserID(userID);
     const patient: Patient = await this.patientService.getPatientByID(id);
     const createResolutionDto: CreateResolutionDto = {
       value: resolutionValueDto.value,
@@ -44,7 +44,7 @@ export class ResolutionController {
       doctor_name: doctor.first_name,
       doctor_specialization: doctor.name,
     };
-    return await this.resolutionService.create(createResolutionDto);
+    return await this.resolutionService.createResolution(createResolutionDto);
   }
 
   @UseGuards(JwtGuard)

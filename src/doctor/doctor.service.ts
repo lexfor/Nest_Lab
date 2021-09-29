@@ -10,8 +10,8 @@ export class DoctorService {
     private readonly doctorRepository: DoctorRepository,
   ) {}
 
-  async findDoctorByUserID(userID: string): Promise<Doctor> {
-    return await this.doctorRepository.findDoctorByUserID(userID);
+  async getDoctorByUserID(userID: string): Promise<Doctor> {
+    return await this.doctorRepository.getDoctorByUserID(userID);
   }
 
   async getAllSpecializations(): Promise<Specialization[]> {

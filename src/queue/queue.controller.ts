@@ -2,7 +2,8 @@ import {
   Controller,
   Dependencies,
   Get,
-  Inject,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   UseGuards,
@@ -26,6 +27,7 @@ export class QueueController {
 
   @UseGuards(JwtGuard)
   @Post(':id/patient/me')
+  @HttpCode(HttpStatus.ACCEPTED)
   async addMeInQueue(
     @Param('id') id: string,
     @userID() userID: string,
@@ -40,7 +42,7 @@ export class QueueController {
   @UseGuards(JwtGuard)
   @Get('me/current')
   async getCurrentInMyQueue(@userID() userID: string): Promise<Patient> {
-    const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
+    const doctor: Doctor = await this.doctorService.getDoctorByUserID(userID);
     const patientID: string = await this.queueService.getCurrentInQueue(
       doctor.id,
     );
@@ -57,7 +59,7 @@ export class QueueController {
   @UseGuards(JwtGuard)
   @Get('me/next')
   async takeNextInMyQueue(@userID() userID: string): Promise<Patient> {
-    const doctor: Doctor = await this.doctorService.findDoctorByUserID(userID);
+    const doctor: Doctor = await this.doctorService.getDoctorByUserID(userID);
     const patientID: string = await this.queueService.takeNextFromQueue(
       doctor.id,
     );

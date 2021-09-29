@@ -8,6 +8,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Token } from './interfaces/token.interface';
+import { errorMessages } from '../helpers/constants';
 
 @Injectable()
 export class AuthService {
@@ -26,18 +27,24 @@ export class AuthService {
         +this.config.get('SALT'),
       ),
     };
-    return this.repository.createUser(cryptUser);
+    return await this.repository.createUser(cryptUser);
   }
 
   async findUser(loginUserDto: LoginUserDto, role: string): Promise<User> {
     const user: User = await this.repository.getUser(loginUserDto.login, role);
     if (!user) {
-      throw new HttpException('Wrong login', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        errorMessages.wrongLogin,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     if (await compareSync(loginUserDto.password, user.password)) {
       return user;
     }
-    throw new HttpException('Wrong password', HttpStatus.UNAUTHORIZED);
+    throw new HttpException(
+      errorMessages.wrongPassword,
+      HttpStatus.UNAUTHORIZED,
+    );
   }
 
   async login({ id }: User): Promise<Token> {
@@ -49,7 +56,10 @@ export class AuthService {
   async isExist(login: string, role = 'patient'): Promise<void> {
     const user = await this.repository.getUser(login, role);
     if (user) {
-      throw new HttpException('User already exist', HttpStatus.CONFLICT);
+      throw new HttpException(
+        errorMessages.userAlreadyExist,
+        HttpStatus.CONFLICT,
+      );
     }
   }
 }

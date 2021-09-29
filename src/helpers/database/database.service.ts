@@ -9,8 +9,8 @@ export class DatabaseService {
     initializeTables(this.connection);
   }
 
-  executeQuery(queryText: string, values: any[] = []): Promise<any[]> {
+  async executeQuery(queryText: string, values: any[] = []): Promise<any[]> {
     const queryAsync = promisify(this.connection.query).bind(this.connection);
-    return queryAsync(queryText, values);
+    return await queryAsync(queryText, values);
   }
 }

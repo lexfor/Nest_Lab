@@ -16,6 +16,7 @@ import { User } from './interfaces/user.interface';
 import { PatientService } from '../patient/patient.service';
 import { CreatePatientDto } from '../patient/dto/create-patient.dto';
 import { Token } from './interfaces/token.interface';
+import { roles } from '../helpers/constants';
 
 @Controller('api/auth')
 @Dependencies(AuthService, PatientService)
@@ -38,14 +39,14 @@ export class AuthController {
       birthday: createUserDto.birthday,
       user_id: user.id,
     };
-    await this.patientService.create(createPatientDto);
+    await this.patientService.createPatient(createPatientDto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
     @Body(ValidationPipe) loginUserDto: LoginUserDto,
-    @Query('role', new DefaultValuePipe('patient')) role: string,
+    @Query('role', new DefaultValuePipe(roles.patient)) role: string,
   ): Promise<Token> {
     const user: User = await this.authService.findUser(loginUserDto, role);
     return await this.authService.login(user);

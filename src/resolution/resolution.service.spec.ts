@@ -47,7 +47,7 @@ describe('QueueService', () => {
         },
       );
 
-      await resolutionService.create(createResolutionDto);
+      await resolutionService.createResolution(createResolutionDto);
     });
   });
 

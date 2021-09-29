@@ -9,14 +9,10 @@ export class RedisRepository {
     private readonly redisClient: RedisClient,
   ) {}
 
-  async addPatientInQueue(queueID: string, patientID: string): Promise<number> {
+  async addPatientInQueue(queueID: string, patientID: string): Promise<string> {
     const rpushAsync = promisify(this.redisClient.rpush).bind(this.redisClient);
     await rpushAsync(`queueTo${queueID}`, patientID);
-    const lrangeAsync = promisify(this.redisClient.lrange).bind(
-      this.redisClient,
-    );
-    const result = await lrangeAsync(`queueTo${queueID}`, 0, -1);
-    return result.length;
+    return patientID;
   }
 
   async getCurrentInQueue(queueID: string): Promise<string> {

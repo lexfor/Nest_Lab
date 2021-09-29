@@ -8,7 +8,7 @@ import { Specialization } from './interfaces/specialization.interface';
 export class SQLRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async findDoctorByUserID(userID: string): Promise<Doctor> {
+  async getDoctorByUserID(userID: string): Promise<Doctor> {
     const sql = `SELECT doctors.*, specializations.name FROM doctors
                  JOIN doctor_specialization
                  ON doctor_specialization.doctor_id = doctors.id

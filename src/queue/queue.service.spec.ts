@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QueueService } from './queue.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Patient } from '../patient/interfaces/patient.interface';
 
 describe('QueueService', () => {
   let queueService: QueueService;
@@ -29,14 +30,21 @@ describe('QueueService', () => {
   describe('add patient in queue', () => {
     it('success patient add', async () => {
       MockQueueRepository.addPatientInQueue.mockImplementation(
-        async (queueID: string, patientID: string): Promise<number> => {
+        async (queueID: string, patientID: string): Promise<string> => {
           expect(queueID).toEqual('1111');
           expect(patientID).toEqual('2222');
-          return 1;
+          return patientID;
         },
       );
 
-      expect(await queueService.addPatientInQueue('1111', '2222')).toEqual(1);
+      MockQueueRepository.getAllPatientsFromQueue.mockImplementation(
+        async (queueID: string): Promise<string[]> => {
+          expect(queueID).toEqual('1111');
+          return ['2222', '3333', '4444'];
+        },
+      );
+
+      expect(await queueService.addPatientInQueue('1111', '2222')).toEqual(3);
     });
   });
 

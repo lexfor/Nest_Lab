@@ -11,7 +11,7 @@ export class PatientService {
     private readonly repository: PatientRepository,
   ) {}
 
-  async create(createPatientDto: CreatePatientDto): Promise<Patient> {
+  async createPatient(createPatientDto: CreatePatientDto): Promise<Patient> {
     const patient: Patient = {
       id: uuidv1(),
       ...createPatientDto,

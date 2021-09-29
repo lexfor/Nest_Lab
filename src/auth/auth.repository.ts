@@ -1,6 +1,7 @@
 import { Dependencies, Injectable } from '@nestjs/common';
 import { DatabaseService } from '../helpers/database/database.service';
 import { User } from './interfaces/user.interface';
+import { roles } from '../helpers/constants';
 
 @Injectable()
 @Dependencies(DatabaseService)
@@ -15,7 +16,7 @@ export class SQLRepository {
 
   async getUser(login: string, role: string): Promise<User> {
     let join = '';
-    if (role === 'doctor') {
+    if (role === roles.doctor) {
       join = `
         JOIN doctors ON 
         doctors.user_id = users.id`;

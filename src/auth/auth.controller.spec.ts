@@ -21,7 +21,7 @@ describe('AuthController', () => {
   };
 
   const MockPatientService = {
-    create: jest.fn(),
+    createPatient: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -68,7 +68,7 @@ describe('AuthController', () => {
         },
       );
 
-      MockPatientService.create.mockImplementation(
+      MockPatientService.createPatient.mockImplementation(
         async (patient: CreatePatientDto): Promise<Patient> => {
           expect(patient).toEqual({
             mail: createUserDto.login,

@@ -7,7 +7,7 @@ describe('DoctorService', () => {
   let doctorService: DoctorService;
 
   const MockDoctorRepository = {
-    findDoctorByUserID: jest.fn(),
+    getDoctorByUserID: jest.fn(),
     getAllSpecializations: jest.fn(),
     getDoctorsBySpecialization: jest.fn(),
   };
@@ -28,7 +28,7 @@ describe('DoctorService', () => {
 
   describe('find doctor by user ID', () => {
     it('success find user', async () => {
-      MockDoctorRepository.findDoctorByUserID.mockImplementation(
+      MockDoctorRepository.getDoctorByUserID.mockImplementation(
         async (userID: string): Promise<Doctor> => {
           expect(userID).toEqual('1111');
           return {
@@ -40,7 +40,7 @@ describe('DoctorService', () => {
           };
         },
       );
-      expect(await doctorService.findDoctorByUserID('1111')).toEqual({
+      expect(await doctorService.getDoctorByUserID('1111')).toEqual({
         id: '2222',
         first_name: 'Dima',
         email: 'dima.mitrichenko@mail.ru',

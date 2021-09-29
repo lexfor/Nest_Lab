@@ -23,7 +23,7 @@ describe('QueueController', () => {
   };
 
   const MockDoctorService = {
-    findDoctorByUserID: jest.fn(),
+    getDoctorByUserID: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -120,7 +120,7 @@ describe('QueueController', () => {
 
   describe('get current in my queue', () => {
     it('success patient get', async () => {
-      MockDoctorService.findDoctorByUserID.mockImplementation(
+      MockDoctorService.getDoctorByUserID.mockImplementation(
         async (userID: string): Promise<Doctor> => {
           expect(userID).toEqual('1111');
           return {
@@ -201,7 +201,7 @@ describe('QueueController', () => {
 
   describe('take nest from queue', () => {
     it('success patient get', async () => {
-      MockDoctorService.findDoctorByUserID.mockImplementation(
+      MockDoctorService.getDoctorByUserID.mockImplementation(
         async (userID: string): Promise<Doctor> => {
           expect(userID).toEqual('1111');
           return {

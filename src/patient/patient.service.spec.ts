@@ -49,7 +49,7 @@ describe('PatientService', () => {
           };
         },
       );
-      expect(await patientService.create(createPatientDto)).toEqual({
+      expect(await patientService.createPatient(createPatientDto)).toEqual({
         id: '2222',
         mail: 'thetim182001@mail.ru',
         name: 'Tim',

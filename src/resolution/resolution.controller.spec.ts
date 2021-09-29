@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ResolutionController } from './resolution.controller';
 import { ResolutionService } from './resolution.service';
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { PatientService } from '../patient/patient.service';
 import { Patient } from '../patient/interfaces/patient.interface';
 import { Doctor } from '../doctor/interfaces/doctor.interface';
@@ -13,7 +12,7 @@ describe('ResolutionController', () => {
   let resolutionController: ResolutionController;
 
   const MockResolutionService = {
-    create: jest.fn(),
+    createResolution: jest.fn(),
     getAllResolutions: jest.fn(),
     deleteResolution: jest.fn(),
   };
@@ -24,7 +23,7 @@ describe('ResolutionController', () => {
   };
 
   const MockDoctorService = {
-    findDoctorByUserID: jest.fn(),
+    getDoctorByUserID: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -52,7 +51,7 @@ describe('ResolutionController', () => {
 
   describe('add resolution', () => {
     it('success resolution add', async () => {
-      MockDoctorService.findDoctorByUserID.mockImplementation(
+      MockDoctorService.getDoctorByUserID.mockImplementation(
         async (userID: string): Promise<Doctor> => {
           expect(userID).toEqual('1111');
           return {
@@ -79,7 +78,7 @@ describe('ResolutionController', () => {
         },
       );
 
-      MockResolutionService.create.mockImplementation(
+      MockResolutionService.createResolution.mockImplementation(
         async (
           createResolutionDto: CreateResolutionDto,
         ): Promise<Resolution> => {

@@ -1,4 +1,4 @@
-import { Dependencies, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ResolutionRepository } from './interfaces/repository.interface';
 import { CreateResolutionDto } from './dto/create-resolution.dto';
 import { Resolution } from './interfaces/resolution.interface';
@@ -13,7 +13,9 @@ export class ResolutionService {
     private readonly configService: ConfigService,
   ) {}
 
-  async create(createResolutionDto: CreateResolutionDto): Promise<Resolution> {
+  async createResolution(
+    createResolutionDto: CreateResolutionDto,
+  ): Promise<Resolution> {
     const resolution: Resolution = {
       ...createResolutionDto,
       id: uuidv1(),

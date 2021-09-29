@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { QueueRepository } from './interfaces/repository.interface';
+import { errorMessages } from '../helpers/constants';
 
 @Injectable()
 export class QueueService {
@@ -9,13 +10,15 @@ export class QueueService {
   ) {}
 
   async addPatientInQueue(queueID: string, patientID: string): Promise<number> {
-    return await this.repository.addPatientInQueue(queueID, patientID);
+    await this.repository.addPatientInQueue(queueID, patientID);
+    const patients = await this.repository.getAllPatientsFromQueue(queueID);
+    return patients.length;
   }
 
   async getCurrentInQueue(queueID: string): Promise<string> {
     const result: string = await this.repository.getCurrentInQueue(queueID);
     if (!result) {
-      throw new HttpException('No patients in queue', HttpStatus.NOT_FOUND);
+      throw new HttpException(errorMessages.queueEmpty, HttpStatus.NOT_FOUND);
     }
     return result;
   }
@@ -24,7 +27,7 @@ export class QueueService {
     await this.repository.takeNextFromQueue(queueID);
     const result = await this.repository.getCurrentInQueue(queueID);
     if (!result) {
-      throw new HttpException('Queue is empty', HttpStatus.NOT_FOUND);
+      throw new HttpException(errorMessages.queueEmpty, HttpStatus.NOT_FOUND);
     }
     return result;
   }
@@ -39,7 +42,7 @@ export class QueueService {
     patients.forEach((item: string) => {
       if (item === patientID) {
         throw new HttpException(
-          'Patient already in queue',
+          errorMessages.alreadyInQueue,
           HttpStatus.CONFLICT,
         );
       }
