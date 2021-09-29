@@ -6,7 +6,8 @@ import {
   Post,
   UseGuards,
   ValidationPipe,
-  Delete, Dependencies,
+  Delete,
+  Dependencies,
 } from '@nestjs/common';
 import { ResolutionService } from './resolution.service';
 import { userID } from '../helpers/decorators/user-id.decarator';
